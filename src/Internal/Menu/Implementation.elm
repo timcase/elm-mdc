@@ -778,7 +778,7 @@ autoPosition config geometry =
             horizontalOffset config corner geometry
 
         verticalOffset_ =
-            60.0
+            56.0
 
         -- verticalOffset config corner geometry
         position =
