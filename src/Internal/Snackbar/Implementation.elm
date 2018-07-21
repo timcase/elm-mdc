@@ -30,6 +30,7 @@ toast onDismiss message =
     , actionOnBottom = False
     , dismissOnAction = True
     , onDismiss = onDismiss
+    , fab = Nothing
     }
 
 
@@ -43,6 +44,7 @@ snack onDismiss message label =
     , actionOnBottom = False
     , dismissOnAction = True
     , onDismiss = onDismiss
+    , fab = Nothing
     }
 
 
@@ -97,6 +99,17 @@ tryDequeue model =
 
         _ ->
             ( model, Cmd.none )
+
+
+fab : Html m -> Property m
+fab btn =
+    Options.option (\config -> { config | fab = Just btn })
+
+
+
+-- fab : Html m -> Property m
+-- fab =
+--     Options.option << (\msg config -> { config | fab = Just msg })
 
 
 update : (Msg m -> m) -> Msg m -> Model m -> ( Model m, Cmd m )

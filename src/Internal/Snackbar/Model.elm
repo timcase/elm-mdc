@@ -8,6 +8,7 @@ module Internal.Snackbar.Model exposing
     )
 
 import Time exposing (Time)
+import Html exposing (Html)
 
 
 type alias Model m =
@@ -26,6 +27,7 @@ type alias Contents m =
     , actionOnBottom : Bool
     , dismissOnAction : Bool
     , onDismiss : Maybe m
+    , fab : Maybe (Html m)
     }
 
 
