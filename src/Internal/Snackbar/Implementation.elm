@@ -1,13 +1,14 @@
-module Internal.Snackbar.Implementation exposing
-    ( add
-    , alignEnd
-    , alignStart
-    , Property
-    , react
-    , snack
-    , toast
-    , view
-    )
+module Internal.Snackbar.Implementation
+    exposing
+        ( add
+        , alignEnd
+        , alignStart
+        , Property
+        , react
+        , snack
+        , toast
+        , view
+        )
 
 import Dict
 import Html.Attributes as Html
@@ -118,7 +119,7 @@ update fwd msg model =
         Move seq transition ->
             if seq == model.seq then
                 move transition model
-                |> Tuple.mapSecond (Cmd.map fwd)
+                    |> Tuple.mapSecond (Cmd.map fwd)
             else
                 ( model, Cmd.none )
 
@@ -128,19 +129,20 @@ update fwd msg model =
                     case actionOnDismiss of
                         Just msg_ ->
                             Helpers.cmd msg_
+
                         Nothing ->
                             Cmd.none
-
             in
-            ( if dismissOnAction then
-                  update fwd (Move model.seq Clicked) model
-              else
-                  ( model, Cmd.none )
-            )
-                |> Tuple.mapSecond (\cmd -> Cmd.batch [ cmd, fwdEffect ])
+                (if dismissOnAction then
+                    update fwd (Move model.seq Clicked) model
+                 else
+                    ( model, Cmd.none )
+                )
+                    |> Tuple.mapSecond (\cmd -> Cmd.batch [ cmd, fwdEffect ])
 
 
-add : (Internal.Msg.Msg m -> m)
+add :
+    (Internal.Msg.Msg m -> m)
     -> Index
     -> Contents m
     -> Store m s
@@ -149,12 +151,12 @@ add lift idx contents store =
     let
         component_ =
             Dict.get idx store.snackbar
-            |> Maybe.withDefault defaultModel
+                |> Maybe.withDefault defaultModel
 
-        (component, effects ) =
+        ( component, effects ) =
             enqueue contents component_
-            |> tryDequeue
-            |> Tuple.mapSecond (Cmd.map (lift << Internal.Msg.SnackbarMsg idx))
+                |> tryDequeue
+                |> Tuple.mapSecond (Cmd.map (lift << Internal.Msg.SnackbarMsg idx))
 
         updatedStore =
             { store | snackbar = Dict.insert idx component store.snackbar }
@@ -163,7 +165,8 @@ add lift idx contents store =
 
 
 type alias Config =
-    {}
+    { fab : Maybe (Html m)
+    }
 
 
 defaultConfig : Config
@@ -217,49 +220,51 @@ snackbar lift model options _ =
 
         actionOnBottom =
             (Maybe.map .actionOnBottom contents == Just True)
-            && multiline
+                && multiline
 
         ({ config } as summary) =
             Options.collect defaultConfig options
     in
-    Options.apply summary Html.div
-    [ cs "mdc-snackbar"
-    , cs "mdc-snackbar--active"
-      |> when isActive
-    , cs "mdc-snackbar--multiline"
-      |> when multiline
-    , cs "mdc-snackbar--action-on-bottom"
-      |> when actionOnBottom
-    , aria "live" "assertive"
-    , aria "atomic" "true"
-    , aria "hidden" "true"
-    ]
-    []
-    [ styled Html.div
-      [ cs "mdc-snackbar__text"
-      ]
-      (contents
-          |> Maybe.map (\c -> [ text c.message ])
-          |> Maybe.withDefault []
-      )
-    , styled Html.div
-      [ cs "mdc-snackbar__action-wrapper"
-      ]
-      [ Options.styled Html.button
-        [ cs "mdc-snackbar__action-button"
-        , Options.attribute (Html.type_ "button")
-        , case onDismiss of
-              Just onDismiss ->
-                  Options.on "click" (Json.succeed onDismiss)
-              Nothing ->
-                  Options.nop
-        ]
-        (action
-            |> Maybe.map (\action -> [ text action ])
-            |> Maybe.withDefault []
-        )
-      ]
-    ]
+        Options.apply summary
+            Html.div
+            [ cs "mdc-snackbar"
+            , cs "mdc-snackbar--active"
+                |> when isActive
+            , cs "mdc-snackbar--multiline"
+                |> when multiline
+            , cs "mdc-snackbar--action-on-bottom"
+                |> when actionOnBottom
+            , aria "live" "assertive"
+            , aria "atomic" "true"
+            , aria "hidden" "true"
+            ]
+            []
+            [ styled Html.div
+                [ cs "mdc-snackbar__text"
+                ]
+                (contents
+                    |> Maybe.map (\c -> [ text c.message ])
+                    |> Maybe.withDefault []
+                )
+            , styled Html.div
+                [ cs "mdc-snackbar__action-wrapper"
+                ]
+                [ Options.styled Html.button
+                    [ cs "mdc-snackbar__action-button"
+                    , Options.attribute (Html.type_ "button")
+                    , case onDismiss of
+                        Just onDismiss ->
+                            Options.on "click" (Json.succeed onDismiss)
+
+                        Nothing ->
+                            Options.nop
+                    ]
+                    (action
+                        |> Maybe.map (\action -> [ text action ])
+                        |> Maybe.withDefault []
+                    )
+                ]
+            ]
 
 
 type alias Property m =
@@ -271,7 +276,8 @@ type alias Property m =
 
 
 type alias Store m s =
-    { s | snackbar : Indexed (Model m)
+    { s
+        | snackbar : Indexed (Model m)
     }
 
 
@@ -282,8 +288,10 @@ react :
     -> Store m s
     -> ( Maybe (Store m s), Cmd m )
 react =
-    Component.react get set Internal.Msg.SnackbarMsg
-        (\ fwd msg model -> Tuple.mapFirst Just (update fwd msg model))
+    Component.react get
+        set
+        Internal.Msg.SnackbarMsg
+        (\fwd msg model -> Tuple.mapFirst Just (update fwd msg model))
 
 
 view :
