@@ -8,6 +8,7 @@ module Internal.Snackbar.Implementation
         , snack
         , toast
         , view
+        , fab
         )
 
 import Dict
@@ -169,9 +170,10 @@ type alias Config m =
     }
 
 
-defaultConfig : Config
+defaultConfig : Config m
 defaultConfig =
-    {}
+    { fab = Nothing
+    }
 
 
 alignStart : Property m
@@ -222,6 +224,14 @@ snackbar lift model options _ =
             (Maybe.map .actionOnBottom contents == Just True)
                 && multiline
 
+        fab =
+            case config.fab of
+                Just fab ->
+                    fab
+
+                Nothing ->
+                    Html.div [] []
+
         ({ config } as summary) =
             Options.collect defaultConfig options
     in
@@ -264,6 +274,7 @@ snackbar lift model options _ =
                         |> Maybe.withDefault []
                     )
                 ]
+            , fab
             ]
 
 
