@@ -268,7 +268,7 @@ snackbar lift model options _ =
 
 
 type alias Property m =
-    Options.Property Config m
+    Options.Property (Config m) m
 
 
 ( get, set ) =
