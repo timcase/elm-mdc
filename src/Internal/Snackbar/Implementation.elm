@@ -164,7 +164,7 @@ add lift idx contents store =
         ( updatedStore, effects )
 
 
-type alias Config =
+type alias Config m =
     { fab : Maybe (Html m)
     }
 
