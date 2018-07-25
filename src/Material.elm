@@ -24,7 +24,7 @@ Some things of note are:
 
   - `Material.Model` and `Material.Msg` have to know your top-level message type
     `Msg` for technical reasons.
-  - Your message constructor `Mdc : Material.Msg Msg -> Msg` _lifts_ internal
+  - Your message constructor `Mdc : Material.Msg Msg -> Msg` *lifts* internal
     component messages to your top-level message type and appears throughout the
     library.
   - To distinguish components, ie. one button from another, this library uses a
@@ -194,6 +194,8 @@ import Internal.Toolbar.Implementation as Toolbar
 import Internal.Toolbar.Model as Toolbar
 import Internal.TopAppBar.Implementation as TopAppBar
 import Internal.TopAppBar.Model as TopAppBar
+import Internal.Bottombar.Implementation as Bottombar
+import Internal.Bottombar.Model as Bottombar
 
 
 {-| Different instances of components are differentiated by an `Index`.
@@ -202,6 +204,7 @@ This is a string and is expected to be globally unique within your program. It
 coincides with `Html.id`, and we may set it as `Html.id` on a component's
 native control (`<input>`) element, ie. Checkbox, Radio, Select, Switch, and
 Textfield.
+
 -}
 type alias Index =
     Internal.Component.Index
@@ -369,6 +372,9 @@ update_ lift msg store =
         TopAppBarMsg idx msg ->
             TopAppBar.react lift msg idx store
 
+        BottombarMsg idx msg ->
+            Bottombar.react lift msg idx store
+
 
 {-| Material subscriptions.
 
@@ -413,6 +419,7 @@ adds the necessary CSS and JavaScript imports.
 
 For production use, you will want to do this yourself in `index.html` to
 prevent an unstyled flash of content and to properly manage assets.
+
 -}
 top : Html a -> Html a
 top content =

@@ -312,7 +312,7 @@ view :
     -> List (Html m)
     -> Html m
 view =
-    Component.render get topAppBar Internal.Msg.BottombarMsg
+    Component.render get bottombar Internal.Msg.BottombarMsg
 
 
 dense : Property m

@@ -23,6 +23,7 @@ import Internal.Tabs.Model as Tabs
 import Internal.Textfield.Model as Textfield
 import Internal.Toolbar.Model as Toolbar
 import Internal.TopAppBar.Model as TopAppBar
+import Internal.Bottombar.Model as Bottombar
 
 
 type Msg m
@@ -46,3 +47,4 @@ type Msg m
     | TextfieldMsg Index Textfield.Msg
     | ToolbarMsg Index Toolbar.Msg
     | TopAppBarMsg Index TopAppBar.Msg
+    | BottombarMsg Index Bottombar.Msg
