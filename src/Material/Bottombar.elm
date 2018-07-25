@@ -8,6 +8,7 @@ module Material.Bottombar
         , denseFixedAdjust
         , fixed
         , fixedAdjust
+        , icon
         , hasActionItem
         , navigationIcon
         , prominent
@@ -235,6 +236,16 @@ app bar.
 denseFixedAdjust : Options.Property c m
 denseFixedAdjust =
     Bottombar.denseFixedAdjust
+
+
+{-| Style an icon as an icon at the end of the toolbar.
+
+Should be applied to a `Icon.view`.
+
+-}
+icon : Icon.Property m
+icon =
+    Bottombar.icon
 
 
 {-| Adds a top margin to the element so that it is not covered by a prominent

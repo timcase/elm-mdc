@@ -9,6 +9,7 @@ module Internal.Bottombar.Implementation
         , fixed
         , fixedAdjust
         , hasActionItem
+        , icon
         , navigationIcon
         , prominent
         , prominentFixedAdjust
@@ -388,6 +389,11 @@ actionItem options name =
             :: options
         )
         name
+
+
+icon : Icon.Property m
+icon =
+    cs "mdc-toolbar__icon"
 
 
 fixedAdjust : Options.Property c m
