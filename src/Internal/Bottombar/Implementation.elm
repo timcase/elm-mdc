@@ -41,7 +41,7 @@ cssClasses :
     }
 cssClasses =
     { dense = "mdc-top-app-bar--dense"
-    , fixed = "mdc-top-app-bar--fixed"
+    , fixed = "mdc-bottombar--fixed"
     , scrolled = "mdc-top-app-bar--fixed-scrolled"
     , prominent = "mdc-top-app-bar--prominent"
     , short = "mdc-top-app-bar--short"
@@ -201,8 +201,8 @@ moveBottombar model =
 -- VIEW
 
 
-topAppBar : (Msg -> m) -> Model -> List (Property m) -> List (Html m) -> Html m
-topAppBar lift model options sections =
+bottombar : (Msg -> m) -> Model -> List (Property m) -> List (Html m) -> Html m
+bottombar lift model options sections =
     let
         ({ config } as summary) =
             Options.collect defaultConfig options
@@ -215,7 +215,7 @@ topAppBar lift model options sections =
     in
         Options.apply summary
             Html.header
-            [ cs "mdc-top-app-bar"
+            [ cs "mdc-bottombar"
             , when config.dense (cs cssClasses.dense)
             , when config.fixed (cs cssClasses.fixed)
             , when (config.fixed && lastScrollPosition > 0) <|
