@@ -215,7 +215,7 @@ bottombar lift model options sections =
             Maybe.withDefault 0 model.styleTop
     in
         Options.apply summary
-            Html.header
+            Html.footer
             [ cs "mdc-bottombar"
             , when config.dense (cs cssClasses.dense)
             , when config.fixed (cs cssClasses.fixed)
