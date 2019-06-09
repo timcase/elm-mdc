@@ -1,8 +1,6 @@
-module Internal.Msg
-    exposing
-        ( Msg(..)
-        )
+module Internal.Msg exposing (Msg(..))
 
+import Internal.Bottombar.Model as Bottombar
 import Internal.Button.Model as Button
 import Internal.Checkbox.Model as Checkbox
 import Internal.Chip.Model as Chip
@@ -47,3 +45,4 @@ type Msg m
     | TextfieldMsg Index Textfield.Msg
     | ToolbarMsg Index Toolbar.Msg
     | TopAppBarMsg Index TopAppBar.Msg
+    | BottombarMsg Index Bottombar.Msg

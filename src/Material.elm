@@ -1,14 +1,13 @@
-module Material
-    exposing
-        ( Index
-        , Model
-        , Msg
-        , defaultModel
-        , init
-        , subscriptions
-        , top
-        , update
-        )
+module Material exposing
+    ( Model
+    , defaultModel
+    , Msg
+    , init
+    , subscriptions
+    , update
+    , Index
+    , top
+    )
 
 {-| Material is a re-implementation of Google's Internal.Components for Web (MDC
 Web) library in pure Elm, with resorting to JavaScript assets only when
@@ -153,6 +152,8 @@ Set the `mdc-typography` class in the body:
 import Dict
 import Html exposing (Html, text)
 import Html.Attributes as Html
+import Internal.Bottombar.Implementation as Bottombar
+import Internal.Bottombar.Model as Bottombar
 import Internal.Button.Implementation as Button
 import Internal.Button.Model as Button
 import Internal.Checkbox.Implementation as Checkbox
@@ -369,6 +370,9 @@ update_ lift msg store =
 
         TopAppBarMsg idx msg_ ->
             TopAppBar.react lift msg_ idx store
+
+        BottombarMsg idx msg_ ->
+            Bottombar.react lift msg_ idx store
 
 
 {-| Material subscriptions.
