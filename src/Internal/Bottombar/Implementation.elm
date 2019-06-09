@@ -379,7 +379,7 @@ navigationIcon options name =
 section : List (Property m) -> List (Html m) -> Html m
 section options =
     styled Html.section
-        (cs "mdc-top-app-bar__section"
+        (cs "mdc-bottombar__section"
             :: options
         )
 
