@@ -282,7 +282,7 @@ bottombar lift model options sections =
 
 row : List (Property m) -> List (Html m) -> Html m
 row options =
-    styled Html.div (cs "mdc-top-app-bar__row" :: options)
+    styled Html.div (cs "mdc-bottombar__row" :: options)
 
 
 
