@@ -1,23 +1,23 @@
-module Material.Bottombar
-    exposing
-        ( actionItem
-        , alignEnd
-        , alignStart
-        , collapsed
-        , dense
-        , denseFixedAdjust
-        , fixed
-        , fixedAdjust
-        , hasActionItem
-        , navigationIcon
-        , prominent
-        , prominentFixedAdjust
-        , Property
-        , section
-        , short
-        , title
-        , view
-        )
+module Material.Bottombar exposing
+    ( Property
+    , view
+    , fixed
+    , dense
+    , prominent
+    , short
+    , collapsed
+    , hasActionItem
+    , section
+    , alignStart
+    , alignEnd
+    , navigationIcon
+    , title
+    , actionItem
+    , fixedAdjust
+    , denseFixedAdjust
+    , prominentFixedAdjust
+    , icon
+    )
 
 {-| A top app bar is a container for items such as application title,
 navigation icon, and action items.
@@ -101,10 +101,10 @@ navigation icon, and action items.
 -}
 
 import Html exposing (Html)
-import Material
-import Internal.Component exposing (Index)
-import Material.Icon as Icon
 import Internal.Bottombar.Implementation as Bottombar
+import Internal.Component exposing (Index)
+import Material
+import Material.Icon as Icon
 import Material.Options as Options
 
 
@@ -227,6 +227,11 @@ See below for special `dense` and `prominent` variants.
 fixedAdjust : Options.Property c m
 fixedAdjust =
     Bottombar.fixedAdjust
+
+
+icon : Icon.Property m
+icon =
+    Bottombar.icon
 
 
 {-| Adds a top margin to the element so that it is not covered by a dense top
