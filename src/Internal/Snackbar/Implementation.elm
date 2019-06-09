@@ -1,14 +1,13 @@
-module Internal.Snackbar.Implementation
-    exposing
-        ( Property
-        , add
-        , alignEnd
-        , alignStart
-        , react
-        , snack
-        , toast
-        , view
-        )
+module Internal.Snackbar.Implementation exposing
+    ( Property
+    , add
+    , alignEnd
+    , alignStart
+    , react
+    , snack
+    , toast
+    , view
+    )
 
 import Dict
 import Html exposing (Html, text)
@@ -31,6 +30,7 @@ toast onDismiss message =
     , actionOnBottom = False
     , dismissOnAction = True
     , onDismiss = onDismiss
+    , fab = Nothing
     }
 
 
@@ -44,6 +44,7 @@ snack onDismiss message label =
     , actionOnBottom = False
     , dismissOnAction = True
     , onDismiss = onDismiss
+    , fab = Nothing
     }
 
 
@@ -100,6 +101,14 @@ tryDequeue model =
             ( model, Cmd.none )
 
 
+
+--This wouldn't compile on elm19 update
+-- Is it being used?
+-- fab : Html m -> Property m
+-- fab btn =
+--     Options.option (\config -> { config | fab = Just btn })
+
+
 update : (Msg m -> m) -> Msg m -> Model m -> ( Model m, Cmd m )
 update fwd msg model =
     case msg of
@@ -107,6 +116,7 @@ update fwd msg model =
             if seq == model.seq then
                 move transition model
                     |> Tuple.mapSecond (Cmd.map fwd)
+
             else
                 ( model, Cmd.none )
 
@@ -122,6 +132,7 @@ update fwd msg model =
             in
             (if dismissOnAction then
                 update fwd (Move model.seq Clicked) model
+
              else
                 ( model, Cmd.none )
             )

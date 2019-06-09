@@ -1,14 +1,13 @@
-module Material.Snackbar
-    exposing
-        ( Contents
-        , Property
-        , add
-        , alignEnd
-        , alignStart
-        , snack
-        , toast
-        , view
-        )
+module Material.Snackbar exposing
+    ( Property
+    , view
+    , alignStart, alignEnd
+    , Contents
+    , add
+    , toast
+    , snack
+    , fab
+    )
 
 {-| Snackbars provide brief messages about app processes at the bottom of the screen.
 
@@ -96,6 +95,7 @@ type alias Contents m =
     , actionOnBottom : Bool
     , dismissOnAction : Bool
     , onDismiss : Maybe m
+    , fab : Maybe (Html m)
     }
 
 
@@ -125,6 +125,11 @@ add :
     -> ( Material.Model m, Cmd m )
 add =
     Snackbar.add
+
+
+fab : Html m -> Property m
+fab =
+    Snackbar.fab
 
 
 {-| Start-align the Snackbar.
