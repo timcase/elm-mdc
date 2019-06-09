@@ -3,6 +3,7 @@ module Internal.Snackbar.Implementation exposing
     , add
     , alignEnd
     , alignStart
+    , fab
     , react
     , snack
     , toast
@@ -104,9 +105,11 @@ tryDequeue model =
 
 --This wouldn't compile on elm19 update
 -- Is it being used?
--- fab : Html m -> Property m
--- fab btn =
---     Options.option (\config -> { config | fab = Just btn })
+
+
+fab : Html m -> Property m
+fab btn =
+    Options.option (\config -> { config | fab = Just btn })
 
 
 update : (Msg m -> m) -> Msg m -> Model m -> ( Model m, Cmd m )
@@ -162,13 +165,23 @@ add lift idx contents store =
     ( updatedStore, effects )
 
 
-type alias Config =
-    {}
+
+--elm19
 
 
-defaultConfig : Config
+type alias Config m =
+    { fab : Maybe (Html m)
+    }
+
+
+
+-- type alias Config =
+--     {}
+
+
+defaultConfig : Config m
 defaultConfig =
-    {}
+    { fab = Nothing }
 
 
 alignStart : Property m
@@ -219,6 +232,14 @@ snackbar lift model options _ =
             (Maybe.map .actionOnBottom contents == Just True)
                 && multiline
 
+        fabButton =
+            case config.fab of
+                Just justFab ->
+                    justFab
+
+                Nothing ->
+                    Html.div [] []
+
         ({ config } as summary) =
             Options.collect defaultConfig options
     in
@@ -261,11 +282,12 @@ snackbar lift model options _ =
                     |> Maybe.withDefault []
                 )
             ]
+        , fabButton
         ]
 
 
 type alias Property m =
-    Options.Property Config m
+    Options.Property (Config m) m
 
 
 getSet =
